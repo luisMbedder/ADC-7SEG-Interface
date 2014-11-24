@@ -1,0 +1,110 @@
+[Header]
+MagicCookie={0b13fe8c-dfe0-40eb-8900-6712719559a7}
+Version=1.0
+[File000]
+Location=C:\Luis\C-C++ Projects\ADC_7SEG_Interface\CONTROL\delay.o
+Folder=Intermediary
+DeviceName=PIC24FJ128GB108
+LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
+LanguageToolID={069BD372-6CA0-40D4-BF2F-5DC806D05083}
+LanguageToolLocation=C:\Program Files\Microchip\mplabc30\v3.30\bin\pic30-gcc.exe
+PPAD=$(BINDIR)||$(TMPDIR)||$(AINDIR)||$(INCDIR)|C:\Luis\C-C++ Projects\ADC_7SEG_Interface\CONTROL\Header||$(LIBDIR)||$(LKRDIR)||
+SOLK=<src>|Source\delay.c|Source\init.c|Source\main.c|Source\timer.c|Source\traps.c|Source\adc.c||<obj>||<lib>||<lkr>|boot_hid_p24FJ128GB108.gld||
+SuiteArgsString=
+ToolArgsString=-g -Wall -mlarge-data
+TraceCmdString=
+DebugOptions=-D__DEBUG
+[File001]
+Location=C:\Luis\C-C++ Projects\ADC_7SEG_Interface\CONTROL\init.o
+Folder=Intermediary
+DeviceName=PIC24FJ128GB108
+LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
+LanguageToolID={069BD372-6CA0-40D4-BF2F-5DC806D05083}
+LanguageToolLocation=C:\Program Files\Microchip\mplabc30\v3.30\bin\pic30-gcc.exe
+PPAD=$(BINDIR)||$(TMPDIR)||$(AINDIR)||$(INCDIR)|C:\Luis\C-C++ Projects\ADC_7SEG_Interface\CONTROL\Header||$(LIBDIR)||$(LKRDIR)||
+SOLK=<src>|Source\delay.c|Source\init.c|Source\main.c|Source\timer.c|Source\traps.c|Source\adc.c||<obj>||<lib>||<lkr>|boot_hid_p24FJ128GB108.gld||
+SuiteArgsString=
+ToolArgsString=-g -Wall -mlarge-data
+TraceCmdString=
+DebugOptions=-D__DEBUG
+[File002]
+Location=C:\Luis\C-C++ Projects\ADC_7SEG_Interface\CONTROL\main.o
+Folder=Intermediary
+DeviceName=PIC24FJ128GB108
+LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
+LanguageToolID={069BD372-6CA0-40D4-BF2F-5DC806D05083}
+LanguageToolLocation=C:\Program Files\Microchip\mplabc30\v3.30\bin\pic30-gcc.exe
+PPAD=$(BINDIR)||$(TMPDIR)||$(AINDIR)||$(INCDIR)|C:\Luis\C-C++ Projects\ADC_7SEG_Interface\CONTROL\Header||$(LIBDIR)||$(LKRDIR)||
+SOLK=<src>|Source\delay.c|Source\init.c|Source\main.c|Source\timer.c|Source\traps.c|Source\adc.c||<obj>||<lib>||<lkr>|boot_hid_p24FJ128GB108.gld||
+SuiteArgsString=
+ToolArgsString=-g -Wall -mlarge-data
+TraceCmdString=
+DebugOptions=-D__DEBUG
+[File003]
+Location=C:\Luis\C-C++ Projects\ADC_7SEG_Interface\CONTROL\timer.o
+Folder=Intermediary
+DeviceName=PIC24FJ128GB108
+LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
+LanguageToolID={069BD372-6CA0-40D4-BF2F-5DC806D05083}
+LanguageToolLocation=C:\Program Files\Microchip\mplabc30\v3.30\bin\pic30-gcc.exe
+PPAD=$(BINDIR)||$(TMPDIR)||$(AINDIR)||$(INCDIR)|C:\Luis\C-C++ Projects\ADC_7SEG_Interface\CONTROL\Header||$(LIBDIR)||$(LKRDIR)||
+SOLK=<src>|Source\delay.c|Source\init.c|Source\main.c|Source\timer.c|Source\traps.c|Source\adc.c||<obj>||<lib>||<lkr>|boot_hid_p24FJ128GB108.gld||
+SuiteArgsString=
+ToolArgsString=-g -Wall -mlarge-data
+TraceCmdString=
+DebugOptions=-D__DEBUG
+[File004]
+Location=C:\Luis\C-C++ Projects\ADC_7SEG_Interface\CONTROL\traps.o
+Folder=Intermediary
+DeviceName=PIC24FJ128GB108
+LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
+LanguageToolID={069BD372-6CA0-40D4-BF2F-5DC806D05083}
+LanguageToolLocation=C:\Program Files\Microchip\mplabc30\v3.30\bin\pic30-gcc.exe
+PPAD=$(BINDIR)||$(TMPDIR)||$(AINDIR)||$(INCDIR)|C:\Luis\C-C++ Projects\ADC_7SEG_Interface\CONTROL\Header||$(LIBDIR)||$(LKRDIR)||
+SOLK=<src>|Source\delay.c|Source\init.c|Source\main.c|Source\timer.c|Source\traps.c|Source\adc.c||<obj>||<lib>||<lkr>|boot_hid_p24FJ128GB108.gld||
+SuiteArgsString=
+ToolArgsString=-g -Wall -mlarge-data
+TraceCmdString=
+DebugOptions=-D__DEBUG
+[File005]
+Location=C:\Luis\C-C++ Projects\ADC_7SEG_Interface\CONTROL\adc.o
+Folder=Intermediary
+DeviceName=PIC24FJ128GB108
+LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
+LanguageToolID={069BD372-6CA0-40D4-BF2F-5DC806D05083}
+LanguageToolLocation=C:\Program Files\Microchip\mplabc30\v3.30\bin\pic30-gcc.exe
+PPAD=$(BINDIR)||$(TMPDIR)||$(AINDIR)||$(INCDIR)|C:\Luis\C-C++ Projects\ADC_7SEG_Interface\CONTROL\Header||$(LIBDIR)||$(LKRDIR)||
+SOLK=<src>|Source\delay.c|Source\init.c|Source\main.c|Source\timer.c|Source\traps.c|Source\adc.c||<obj>||<lib>||<lkr>|boot_hid_p24FJ128GB108.gld||
+SuiteArgsString=
+ToolArgsString=-g -Wall -mlarge-data
+TraceCmdString=
+DebugOptions=-D__DEBUG
+[File006]
+Location=C:\Luis\C-C++ Projects\ADC_7SEG_Interface\CONTROL\ADC_7SEG_Interface.cof
+Folder=Output
+DeviceName=PIC24FJ128GB108
+LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
+LanguageToolID={433C3D55-811D-409D-A6BF-159CF9355B42}
+LanguageToolLocation=C:\Program Files\Microchip\mplabc30\v3.30\bin\pic30-ld.exe
+PPAD=$(BINDIR)||$(TMPDIR)||$(AINDIR)||$(INCDIR)|C:\Luis\C-C++ Projects\ADC_7SEG_Interface\CONTROL\Header||$(LIBDIR)||$(LKRDIR)||
+SOLK=<src>|Source\delay.c|Source\init.c|Source\main.c|Source\timer.c|Source\traps.c|Source\adc.c||<obj>||<lib>||<lkr>|boot_hid_p24FJ128GB108.gld||
+SuiteArgsString=
+ToolArgsString=-o"$(BINDIR_)$(TARGETBASE).$(TARGETSUFFIX)" -Map="$(BINDIR_)$(TARGETBASE).map" --report-mem
+TraceCmdString=
+DebugOptions=--defsym=__MPLAB_DEBUG=1
+[File007]
+Location=C:\Luis\C-C++ Projects\ADC_7SEG_Interface\CONTROL\ADC_7SEG_Interface.hex
+Folder=Output
+DeviceName=PIC24FJ128GB108
+LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
+LanguageToolID={433C3D55-811D-409D-A6BF-159CF9355B42}
+LanguageToolLocation=C:\Program Files\Microchip\mplabc30\v3.30\bin\pic30-ld.exe
+PPAD=$(BINDIR)||$(TMPDIR)||$(AINDIR)||$(INCDIR)|C:\Luis\C-C++ Projects\ADC_7SEG_Interface\CONTROL\Header||$(LIBDIR)||$(LKRDIR)||
+SOLK=<src>|Source\delay.c|Source\init.c|Source\main.c|Source\timer.c|Source\traps.c|Source\adc.c||<obj>||<lib>||<lkr>|boot_hid_p24FJ128GB108.gld||
+SuiteArgsString=
+ToolArgsString=-o"$(BINDIR_)$(TARGETBASE).$(TARGETSUFFIX)" -Map="$(BINDIR_)$(TARGETBASE).map" --report-mem
+TraceCmdString=
+DebugOptions=--defsym=__MPLAB_DEBUG=1
+[TOOL_LOC_STAMPS]
+tool_loc{069BD372-6CA0-40D4-BF2F-5DC806D05083}=C:\Program Files\Microchip\mplabc30\v3.30\bin\pic30-gcc.exe
+tool_loc{433C3D55-811D-409D-A6BF-159CF9355B42}=C:\Program Files\Microchip\mplabc30\v3.30\bin\pic30-ld.exe
