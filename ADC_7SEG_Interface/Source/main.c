@@ -90,7 +90,6 @@ _CONFIG3(  WPEND_WPSTARTMEM //Write Protect from page 0 to WPFP
 ********************************************************************/
 RESET_CONDITION_T reset_condition(void);
 ADC_ERROR_T voltage_error(void);
-EXCITATION_ERROR_T excitation_error(void);
 U16 max_loop_time(void);
 
 
@@ -115,7 +114,6 @@ void YourLowPriorityISRCode();
 * Static Variables
 ********************************************************************/
 RESET_CONDITION_T m_reset_condition = POWER_ON_RESET;
-EXCITATION_ERROR_T m_excitation_error = NO_EXCITATION_ERROR;
 ADC_ERROR_T m_voltage_error = NO_ADC_ERROR;
 static U16 m_max_loop_time = 0;
 

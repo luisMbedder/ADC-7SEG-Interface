@@ -111,7 +111,7 @@ static void configure_io(void)
    LATBbits.LATB6 = 0; //PGEC, Pin 21 unused, set to 0
    LATBbits.LATB7 = 0; //PGED, Pin 22 unused, set to 0
    LATBbits.LATB8 = 0; //Pin 27 unused, set to output driving ground
-   HEARTBEAT_LED_PIN = HEARTBEAT_LED_OFF; //LATBbits.LATB9 = 0
+   LATBbits.LATB9 = 0; //Pin 29 unused, set to output driving ground
    LATBbits.LATB10 = 0; //Pin 29 unused, set to output driving ground
    LATBbits.LATB11 = 0; //Pin 30 unused, set to output driving ground
    LATBbits.LATB12 = 0; //Pin 33 unused, set to output driving ground
@@ -125,9 +125,9 @@ static void configure_io(void)
    //initialize Port C output pins
    /*
    //No C0, set to 0
-   LATCH_TENSION_OUT_DAC_PIN_LEFT = RESET_LATCH; //LATCbits.LATC1 = 1
+   //LATCbits.LATC1 = 0; //Pin 4 unused, set to output driving ground
    //No C2, set to 0
-   LATCH_TENSION_OUT_DAC_PIN_RIGHT = RESET_LATCH; //LATCbits.LATC3 = 1
+   //LATCbits.LATC3 = 0; //Pin 5 unused, set to output driving ground
    //No C4, set to 0
    //No C5, set to 0
    //No C6, set to 0
@@ -141,7 +141,7 @@ static void configure_io(void)
    LATCbits.LATC14 = 0; //Pin 60 unused, set to output driving ground
    //C15 - Pin 50 used as OSCO, set to 0
    */
-   LATC = 0b0000000000001010;
+   LATC = 0b0000000000000000;
           //FEDCBA9876543210
 
    //initialize Port D output pins
@@ -150,7 +150,7 @@ static void configure_io(void)
    //D1 - Pin 61 controlled by SPI1, set to 0
    //D2 - Pin 62 controlled by SPI1, set to 0
    //D3 - Pin 63 controlled by SPI1, set to 0
-   LATBbits.LATD4 = 0; //Pin 66 unused, set to output driving ground, interrupt input for adc
+   LATBbits.LATD4 = 0; //Pin 66 unused, set to output driving ground
    LATBbits.LATD5 = 0; //Pin 67 unused, set to output driving ground
    LATDbits.LATD6 = 0; //Pin 68 unused, set to output driving ground
    LATDbits.LATD7 = 0; //Pin 69 unused, set to output driving ground
@@ -158,24 +158,24 @@ static void configure_io(void)
    LATDbits.LATD9 = 0; //I2C pin, initialized to 0
    LATDbits.LATD10 = 0;//I2C pin, initialized to 0
    LATDbits.LATD11 = 0;//Pin 57 unused, set to output driving ground
-   XDCR_ADC_CS_PIN = SELECT; //LATDbits.LATD12 = 0
+   ADC_CS_PIN = SELECT; //LATDbits.LATD12 = 0
    LATDbits.LATD13 = 0; //Pin 65 unused, set to output driving ground
    LATDbits.LATD14 = 0;//Pin 37 unused, set to output driving ground
-   TENSION_OUT_DAC_CS_PIN_RIGHT = DESELECT; //LATDbits.LATD15=1
+   LATDbits.LATD14 = 0;//Pin 37 unused, set to output driving ground
    */
-   LATD = 0b1000000000000000;
+   LATD = 0b0000000000000000;
           //FEDCBA9876543210
 
    //initialize Port E output pins
    /*
-   //E0 - Pin 76 used as input, set to 0
-   //E1 - Pin 77 used as input, set to 0
-   //E2 - Pin 78 used as input, set to 0
-   //E3 - Pin 79 used as input, set to 0
+   //LATEbits.LATE0 = 0;//Pin 76 unused, set to output driving ground
+   //LATEbits.LATE1 = 0;//Pin 77 unused, set to output driving ground
+   //LATEbits.LATE2 = 0;//Pin 78 unused, set to output driving ground
+   //LATEbits.LATE3 = 0;//Pin 79 unused, set to output driving ground
    //LATEbits.LATE4 = 0;//Pin 80 unused, set to output driving ground
-   CONTROL_OUT_ENABLE_PIN = DISABLE_CONTROL_OUT; //LATEbits.LATE5 = 1
-   //LATEbits.LATE6 = 0;//I2C pin, initialized to 0
-   //LATEbits.LATE7 = 0;//I2C pin, initialized to 0
+   //LATEbits.LATE5 = 0;//Pin 1 unused, set to output driving ground
+   //LATEbits.LATE6 = 0;//Pin 2 unused, set to output driving ground
+   //LATEbits.LATE7 = 0;//Pin 3 unused, set to output driving ground
    //LATEbits.LATE8 = 0;//Pin 13 unused, set to output driving ground
    //LATEbits.LATE9 = 0; //Pin 14 unused, set to 0
    //No E10, set to 0
@@ -185,7 +185,7 @@ static void configure_io(void)
    //No E14, set to 0
    //No E15, set to 0
    */
-   LATE = 0b0000000000100000;
+   LATE = 0b0000000000000000;
           //FEDCBA9876543210
 
    //initialize Port F output pins
@@ -218,10 +218,10 @@ static void configure_io(void)
    //LATGbits.LATG3 = 0; //Pin 46 unused, set to output driving ground
    //No G4, set to 0
    //No G5, set to 0
-   //G6 - Pin 6 controlled by SPI2, set to 0
-   //G7 - Pin 7 controlled by SPI2, set to 0
-   //TENSION_OUT_DAC_CS_PIN_LEFT = DESELECT; //LATGbits.LATE8=1
-   BUFFER_ENABLE_PIN = BUFFER_DISABLED; //LATGbits.LATG9 = 1
+   //LATGbits.LATG6 = 0; //Pin 6 unused, set to output driving ground
+   //LATGbits.LATG7 = 0; //Pin 7 unused, set to output driving ground
+   //LATGbits.LATG8 = 0; //Pin 8 unused, set to output driving ground
+   //LATGbits.LATG9 = 0; //Pin 9 unused, set to output driving ground
    //No G10, set to 0
    //No G11, set to 0
    //No G12, set to 0
@@ -229,42 +229,41 @@ static void configure_io(void)
    //No G14, set to 0
    //No G15, set to 0   
    */
-   LATG = 0b0000001100000000;
+   LATG = 0b0000000000000000;
           //FEDCBA9876543210
 
 
    //configure open-drain pins
    /*
-   ODCAbits.ODA14 = 1; //Set pin A14 (SCL) to open-drain configuration
-   ODCAbits.ODA15 = 1; //Set pin A15 (SDA) to open-drain configuration
+   ODCAbits.ODA14 = 0; 
+   ODCAbits.ODA15 = 0; 
    */
-   ODCA = 0b1100000000000000;
+   ODCA = 0b0000000000000000;
           //FEDCBA9876543210
 
    //configure open-drain pins
    /*
-   ODCDbits.ODD4 = 1; //Set pin D4 (EXC_5V_10V_SEL_PIN) to open-drain configuration
-   ODCDbits.ODD5 = 1; //Set pin D5 (EXC_ON_OFF_PIN) to open-drain configuration
    ODCDbits.ODD9 = 1; //Set pin D9 (SDA) to open-drain configuration
    ODCDbits.ODD10 = 1; //Set pin D10 (SCL) to open-drain configuration
    */
-   ODCD = 0b0000011000110000;
+   ODCD = 0b0000011000000000;
           //FEDCBA9876543210
 
    //configure open-drain pins
    /*
-   ODCEbits.ODE6 = 1; //Set pin E6 (SCL) to open-drain configuration
-   ODCEbits.ODE7 = 1; //Set pin E7 (SDA) to open-drain configuration
+   ODCEbits.ODE6 = 0; 
+   ODCEbits.ODE7 = 0; 
    */
-   ODCE = 0b0000000011000000;
+   ODCE = 0b0000000000000000;
           //FEDCBA9876543210
 
 
    //configure Port A I/O direction
-   /*
-   TRISAbits.TRISA14 = 0; //SCL
-   TRISAbits.TRISA15 = 0; //SDA
-   */
+	/*
+  	TRISAbits.TRISA14 = 0; //SCL
+   	TRISAbits.TRISA15 = 0; //SDA
+	*/
+
    TRISA = 0b0011111111111111;
            //FEDCBA9876543210
 
@@ -276,10 +275,10 @@ static void configure_io(void)
    TRISBbits.TRISB3 = 0; //Pin 17 unused, set to output driving ground
    TRISBbits.TRISB4 = 0; //Pin 16 unused, set to output driving ground
    TRISBbits.TRISB5 = 0; //Pin 15 unused, set to output driving ground
-   TRISBbits.TRISB6 = 1; //PGEC, Pin 21 unused
-   TRISBbits.TRISB7 = 1; //PGED, Pin 22 unused
+   TRISBbits.TRISB6 = 1; //PGEC, Pin 21 
+   TRISBbits.TRISB7 = 1; //PGED, Pin 22 
    TRISBbits.TRISB8 = 0; //Pin 27 unused, set to output driving ground
-   TRISBbits.TRISB9 = 0; //Set pin B9 (HEARTBEAT_LED_PIN) to output
+   TRISBbits.TRISB9 = 0; //Pin 27 unused, set to output driving ground
    TRISBbits.TRISB10 = 0; //Pin 29 unused, set to output driving ground
    TRISBbits.TRISB11 = 0; //Pin 30 unused, set to output driving ground
    TRISBbits.TRISB12 = 0; //Pin 33 unused, set to output driving ground
@@ -293,9 +292,9 @@ static void configure_io(void)
    //configure Port C I/O direction
    /*
    //No C0, set to 0
-   TRISCbits.TRISC1 = 0; //Set pin C1 (LATCH_TENSION_OUT_DAC_PIN_LEFT) to output
+   TRISCbits.TRISC1 = 0; //Pin 4 unused, set to output driving ground
    //No C2, set to 0
-   TRISCbits.TRISC3 = 0; //Set pin C3 (LATCH_TENSION_OUT_DAC_PIN_RIGHT) to output
+   TRISCbits.TRISC3 = 0; //Pin 3 unused, set to output driving ground
    //No C4, set to 0
    //No C5, set to 0
    //No C6, set to 0
@@ -318,32 +317,32 @@ static void configure_io(void)
    TRISDbits.TRISD1 = 0; //SCLK_XDCR
    TRISDbits.TRISD2 = 0; //MOSI_XDCR
    TRISDbits.TRISD3 = 1; //MISO_XDCR
-   TRISDbits.TRISD4 = 1; //Pin 66 unused, set to output driving ground, adc interrupt input
+   TRISDbits.TRISD4 = 1; //Pin 66 unused, set to output driving ground
    TRISDbits.TRISD5 = 0; //Pin 67 unused, set to output driving ground
    TRISDbits.TRISD6 = 0; //Pin 68 unused, set to output driving ground
    TRISDbits.TRISD7 = 0; //Pin 69 unused, set to output driving ground
    TRISDbits.TRISD8 = 0; //Pin 54 unused, set to output driving ground
-   TRISDbits.TRISD9 = 0; //I2C SDA_LT_RT
-   TRISDbits.TRISD10 = 0; //I2C SCL_LT_RT
+   TRISDbits.TRISD9 = 0; //Pin 55 unused, set to output driving ground
+   TRISDbits.TRISD10 = 0; //Pin 56 unused, set to output driving ground
    TRISDbits.TRISD11 = 0; //Pin 57 unused, set to output driving ground
-   TRISDbits.TRISD12 = 0; //Set pin D12 (XDCR_ADC_CS_PIN) to output
+   TRISDbits.TRISD12 = 0; //Set pin D12 (ADC_CS_PIN) to output
    TRISDbits.TRISD13 = 0; //Pin 65 unused, set to output driving ground
    TRISDbits.TRISD14 = 0; //Pin 37 unused, set to output driving ground
-   TRISDbits.TRISD15 = 0; //Set pin D15 (TENSION_OUT_DAC_CS_PIN_RIGHT) to output
+   TRISDbits.TRISD15 = 0; //Pin   unused, set to output driving ground
    */
    TRISD = 0b0000000000001000;
            //FEDCBA9876543210
 
    //configure Port E I/O direction
    /*
-   TRISEbits.TRISE0 = 1; //Set pin E0 (MENU_BUTTON) to input
-   TRISEbits.TRISE1 = 1; //Set pin E1 (UP_BUTTON) to input
-   TRISEbits.TRISE2 = 1; //Set pin E2 (DOWN_BUTTON) to input
-   TRISEbits.TRISE3 = 1; //Set pin E3 (SET_BUTTON) to input
+   TRISEbits.TRISE0 = 0; //Pin 76 unused, set to output driving ground
+   TRISEbits.TRISE1 = 0; //Pin 77 unused, set to output driving ground
+   TRISEbits.TRISE2 = 0; //Pin 78 unused, set to output driving ground
+   TRISEbits.TRISE3 = 0; //Pin 79 unused, set to output driving ground
    TRISEbits.TRISE4 = 0; //Pin 80 unused, set to output driving ground
-   TRISEbits.TRISE5 = 0; //Set pin E5 (CONTROL_OUT_ENABLE_PIN) to output
-   TRISEbits.TRISE6 = 0; //Set pin E6 (SCL_TOT) to output
-   TRISEbits.TRISE7 = 0; //Set pin E7 (SDA_TOT) to output
+   TRISEbits.TRISE5 = 0; //Pin 1 unused, set to output driving ground
+   TRISEbits.TRISE6 = 0; //Pin 2 unused, set to output driving ground
+   TRISEbits.TRISE7 = 0; //Pin 3 unused, set to output driving ground
    TRISEbits.TRISE8 = 0; //Pin 13 unused, set to output driving ground
    TRISEbits.TRISE9 = 0; //Pin 14 unused, set to output driving ground
    //No E10, set to 0
@@ -353,7 +352,7 @@ static void configure_io(void)
    //No E14, set to 0
    //No E15, set to 0
    */
-   TRISE = 0b0000000000001111;
+   TRISE = 0b0000000000000000;
            //FEDCBA9876543210
 
    //configure Port F I/O direction
@@ -361,9 +360,9 @@ static void configure_io(void)
    TRISFbits.TRISF0 = 0; //Pin 72 unused, set to output driving ground
    TRISFbits.TRISF1 = 0; //Pin 73 unused, set to output driving ground
    TRISFbits.TRISF2 = 0; //Pin 74 unused, set to output driving ground
-   TRISFbits.TRISF3 = 0; //Pin 41 unused, set to output driving ground //temp use as INT1 input
-   TRISFbits.TRISF4 = 0; //SCLK_RIGHT
-   TRISFbits.TRISF5 = 0; //MOSI_RIGHT
+   TRISFbits.TRISF3 = 0; //Pin 41 unused, set to output driving ground 
+   TRISFbits.TRISF4 = 0; //Pin 39 unused, set to output driving ground
+   TRISFbits.TRISF5 = 0; //Pin 40 unused, set to output driving ground
    //No F6, set to 0
    //No F7, set to 0
    TRISFbits.TRISF8 = 0; //Pin 43 unused, set to output driving ground
@@ -375,7 +374,7 @@ static void configure_io(void)
    //No F14, set to 0
    //No F15, set to 0
    */
-   TRISF = 0b0000000000001000;
+   TRISF = 0b0000000000000000;
            //FEDCBA9876543210
 
 
@@ -387,10 +386,10 @@ static void configure_io(void)
    TRISGbits.TRISG3 = 0; //Pin 46 unused, set to output driving ground
    //No G4, set to 0
    //No G5, set to 0
-   TRISGbits.TRISG6 = 0; //MOSI_LEFT
-   TRISGbits.TRISG7 = 0; //SCLK_LEFT
-   TRISGbits.TRISG8 = 0; //Set pin G8 (TENSION_OUT_DAC_CS_PIN_LEFT) to output
-   TRISGbits.TRISG9 = 0; //Set pin G9 (BUFFER_ENABLE_PIN) to output
+   TRISGbits.TRISG6 = 0; //Pin 6 unused, set to output driving ground
+   TRISGbits.TRISG7 = 0; //Pin 7 unused, set to output driving ground
+   TRISGbits.TRISG8 = 0; //Pin 8 unused, set to output driving ground
+   TRISGbits.TRISG9 = 0; //Pin 10 unused, set to output driving ground
    //No G10, set to 0
    //No G11, set to 0
    //No G12, set to 0
@@ -413,7 +412,7 @@ static void configure_io(void)
    AD1PCFGLbits.PCFG6 = 1; //Configure AN6 (Pin 21) in Digital mode, PGEC / unused
    AD1PCFGLbits.PCFG7 = 1; //Configure AN7 (Pin 22) in Digital mode, PGED / unused
    AD1PCFGLbits.PCFG8 = 1; //Configure AN8 (Pin 27) in Digital mode, unused
-   AD1PCFGLbits.PCFG9 = 1; //Configure AN9 (Pin 28) in Digital mode, used as HEARTBEAT_LED_PIN
+   AD1PCFGLbits.PCFG9 = 1; //Configure AN9 (Pin 28) in Digital mode, unused 
    AD1PCFGLbits.PCFG10 = 1; //Configure AN10 (Pin 29) in Digital mode, unused
    AD1PCFGLbits.PCFG11 = 1; //Configure AN11 (Pin 30) in Digital mode, unused
    AD1PCFGLbits.PCFG12 = 1; //Configure AN12 (Pin 33) in Digital mode, unused 
@@ -429,7 +428,6 @@ static void configure_io(void)
    __builtin_write_OSCCONL(OSCCON & 0xBF); //clear bit 6 of OSCCONL to unlock Pin Re-map
    //configure input functions
    RPINR20bits.SDI1R = 22; //assign SPI1 Data Input (SDI1) to RP22 (Pin 63)
-   RPINR0bits.INT1R = 25;//assign to pin 66 RP25   assign external interrupt 1 to RP25 (Pin66),25 in production board
  //  RPINR28bits.SDI3R = 3; //assign SPI3 Data Input (SDI3) to RP3 (Pin 56)
 //   RPINR18bits.U1RXR = 15; //assign UART1 Receive (U1RX) to RP15 (Pin 43)
  //  RPINR19bits.U2RXR = 10; //assign UART2 Receive (U2RX) to RP10 (Pin 39)
@@ -437,10 +435,6 @@ static void configure_io(void)
    //configure output functions
    RPOR12bits.RP24R = 8; //8 represents SPI1 SCK Out (SCK1OUT), assigned to RP24 (Pin 61)
    RPOR11bits.RP23R = 7; //7 represents SPI1 Data Out (SDO1), assigned to RP23 (Pin 62)
-   RPOR13bits.RP26R = 11; //11 represents SPI2 SCK Out (SCK2OUT), assigned to RP26 (Pin 7)
-   RPOR10bits.RP21R = 10; //10 represents SPI2 Data Out (SDO2), assigned to RP21 (Pin 6)
-   RPOR5bits.RP10R = 33; //33 represents SPI3 SCK Out (SCK3OUT), assigned to RP10 (Pin 39)
-   RPOR8bits.RP17R = 32; //32 represents SPI3 Data Out (SDO3), assigned to RP12 (Pin 40)
   // RPOR15bits.RP30R = 3; //3 represents UART1 Transmit (U1TX), assigned to RP30 (Pin 42)
  //  RPOR7bits.RP14R = 5; //5 represents UART2 Transmit (U2TX), assinged to RP14 (Pin 35)
 
@@ -530,7 +524,7 @@ void configure_display_i2c_port(void)
    U16 i = 0;
 
    ///////////////////////////////////
-   //manually reset the eeprom device
+   //manually reset the display device
    ///////////////////////////////////
    SCL_PIN = 0;
    SDA_PIN = 0;

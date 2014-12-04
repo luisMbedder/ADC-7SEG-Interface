@@ -16,7 +16,7 @@
 * Extern function prototypes
 ********************************************************************/
 void configure_processor(void);
-void configure_eeprom_i2c_port(void);
+void configure_display_i2c_port(void);
 
 
 #endif //INIT_H
