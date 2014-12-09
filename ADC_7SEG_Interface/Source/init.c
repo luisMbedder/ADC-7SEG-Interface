@@ -231,36 +231,15 @@ static void configure_io(void)
 
    //configure open-drain pins
    /*
-   ODCAbits.ODA14 = 0; 
-   ODCAbits.ODA15 = 0; 
-   */
-   ODCA = 0b0000000000000000;
-          //FEDCBA9876543210
-
-   //configure open-drain pins
-   /*
    ODCDbits.ODD9 = 1; //Set pin D9 (SDA) to open-drain configuration
    ODCDbits.ODD10 = 1; //Set pin D10 (SCL) to open-drain configuration
    */
    ODCD = 0b0000011000000000;
           //FEDCBA9876543210
 
-   //configure open-drain pins
-   /*
-   ODCEbits.ODE6 = 0; 
-   ODCEbits.ODE7 = 0; 
-   */
-   ODCE = 0b0000000000000000;
-          //FEDCBA9876543210
-
-
    //configure Port A I/O direction
-	/*
-  	TRISAbits.TRISA14 = 0; //SCL
-   	TRISAbits.TRISA15 = 0; //SDA
-	*/
 
-   TRISA = 0b0011111111111111;
+   TRISA = 0b1111111111111111;
            //FEDCBA9876543210
 
    //configure Port B I/O direction
@@ -313,7 +292,7 @@ static void configure_io(void)
    TRISDbits.TRISD1 = 0; //SCLK_XDCR
    TRISDbits.TRISD2 = 0; //MOSI_XDCR
    TRISDbits.TRISD3 = 1; //MISO_XDCR
-   TRISDbits.TRISD4 = 1; //Pin 66 unused, set to output driving ground
+   TRISDbits.TRISD4 = 0; //Pin 66 unused, set to output driving ground
    TRISDbits.TRISD5 = 0; //Pin 67 unused, set to output driving ground
    TRISDbits.TRISD6 = 0; //Pin 68 unused, set to output driving ground
    TRISDbits.TRISD7 = 0; //Pin 69 unused, set to output driving ground

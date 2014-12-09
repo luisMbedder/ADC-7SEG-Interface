@@ -146,10 +146,11 @@ int main(void)
    initialize_system();
 
    m_max_loop_time = 0;
-
+SS_Init();
       while (1)
       {
          process_adc();
+         
 
       }
 

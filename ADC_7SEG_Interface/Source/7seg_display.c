@@ -22,7 +22,7 @@ static I2C_LOW_LEVEL_ERROR_T StopI2C1(void);
 static U16 i2c_busy(void);
 void I2C_WriteByte(U8 busAddr, unsigned char data_out);
 void SS_Init();
-void I2C_WriteBytes(U8 busAddr, U16 const* data_out_p,const U8 num_of_bytes);
+void I2C1_WriteDisplay(U8 busAddr, U16 const* data_out_p,const U8 num_of_bytes);
 
 #define HT16K33 0xE0// I2C bus address for Ht16K33 backpack
 #define HT16K33_ON 0x21 // turn device oscillator on
@@ -45,7 +45,7 @@ static U16 display_data[6]={0x06, 0x5B, 0x00, 0x4F, 0x66};//1,2,colon off,3,4
 	delay_10us(10);
 	I2C1_WriteByte(HT16K33,HT16K33_DIM+15 ); // set max brightness
 	delay_10us(10);
-   I2C1_WriteBytes(HT16K33,display_data,6);	
+   I2C1_WriteDisplay(HT16K33,display_data,6);	
 
 }
 
@@ -126,7 +126,20 @@ I2C1_Stop();
 
 }
 
-void I2C1_WriteBytes(U8 busAddr, U16 const* data_out_p,const U8 num_of_bytes){
+/************************************************************************
+* Function Name: I2C1_WriteDisplay
+*
+* Created by : LuisMbedder
+*
+* Description : function to write data to the 7 segment display
+*               This routine is used to write a byte to the I2C bus.
+*                    The input parameter data_out is written to the
+*                    I2CTRN register. If IWCOL bit is set,write collision
+*                    has occured and -1 is returned, else 0 is returned.
+*    Parameters:     unsigned char : data_out
+*    Return Value:   char
+*************************************************************************/
+void I2C1_WriteDisplay(U8 busAddr, U16 const* data_out_p,const U8 num_of_bytes){
 
 I2C_LOW_LEVEL_ERROR_T return_error = NO_I2C_ERROR;
 U8 transmission_count = 0;
@@ -215,11 +228,6 @@ static I2C_LOW_LEVEL_ERROR_T MasterWriteI2C1(unsigned char data_out)
 {
    I2C_LOW_LEVEL_ERROR_T return_error = NO_I2C_ERROR;
    I2C1TRN = data_out; //write byte to I2C transmit register
-if(I2C1TRN == 0x03e8)
-	{
-	Nop();
-	Nop();
-	}
    if(I2C1STATbits.IWCOL) //collision occurred, communication stopped
    {
       return_error = StopI2C1();
