@@ -93,10 +93,6 @@ static void configure_clock(void)
 static void configure_io(void)
 {
    //initialize Port A output pins
-   /*
-   LATAbits.LATA14 = 0; //I2C pin, initialized to 0
-   LATAbits.LATA15 = 0; //I2C pin, initialized to 0
-   */
    LATA = 0b0000000000000000;
           //FEDCBA9876543210
 
@@ -322,8 +318,8 @@ static void configure_io(void)
    TRISDbits.TRISD6 = 0; //Pin 68 unused, set to output driving ground
    TRISDbits.TRISD7 = 0; //Pin 69 unused, set to output driving ground
    TRISDbits.TRISD8 = 0; //Pin 54 unused, set to output driving ground
-   TRISDbits.TRISD9 = 0; //Pin 55 unused, set to output driving ground
-   TRISDbits.TRISD10 = 0; //Pin 56 unused, set to output driving ground
+   TRISDbits.TRISD9 = 0; //I2C
+   TRISDbits.TRISD10 = 0; //I2C
    TRISDbits.TRISD11 = 0; //Pin 57 unused, set to output driving ground
    TRISDbits.TRISD12 = 0; //Set pin D12 (ADC_CS_PIN) to output
    TRISDbits.TRISD13 = 0; //Pin 65 unused, set to output driving ground
@@ -507,7 +503,7 @@ static void configure_adc_spi_port(void)
 *
 * Created by : LuisMbedder
 *
-* Description : Configures the I2C2 module for communication with the
+* Description : Configures the I2C1 module for communication with the
 *               7-segment led displays. 
 *
 * Notes : This function is not declared static so it can be used
@@ -517,91 +513,43 @@ static void configure_adc_spi_port(void)
 void configure_display_i2c_port(void)
 {
    //turn off port to allow manual reinitialization of the i2c bus
-   I2C2CONbits.I2CEN = 0; //disable I2C module
-   LATAbits.LATA14 = 0; //I2C pin, initialized to 0
-   LATAbits.LATA15 = 0; //I2C pin, initialized to 0
+   I2C1CONbits.I2CEN = 0; //disable I2C module
+   LATDbits.LATD9 = 0; //I2C pin, initialized to 0
+   LATDbits.LATD10 = 0; //I2C pin, initialized to 0
 
    U16 i = 0;
 
-   ///////////////////////////////////
-   //manually reset the display device
-   ///////////////////////////////////
-   SCL_PIN = 0;
-   SDA_PIN = 0;
-   delay_10us(10);
-
-   SCL_PIN = 0;
-   SDA_PIN = 1;
-   delay_10us(2);
-
-   //transmit START command
-   SCL_PIN = 1;
-   delay_10us(1);
-   SDA_PIN = 0;
-   delay_10us(1);
-   SCL_PIN = 0;
-   delay_10us(1);
-
-   //transmit 9 clocks
-   SDA_PIN = 1;
-   delay_10us(1);
-   
-   for (i = 0 ; i < 9; i++)
-   {
-      SCL_PIN = 1;
-      delay_10us(2);
-      SCL_PIN = 0;
-      delay_10us(2);
-   }
-
-   //transmit START command
-   SCL_PIN = 1;
-   delay_10us(1);
-   SDA_PIN = 0;
-   delay_10us(1);
-   SCL_PIN = 0;
-   delay_10us(1);
-
-   //transmit stop command
-   SCL_PIN = 1;
-   delay_10us(1);
-   SDA_PIN = 1;
-   delay_10us(1);
-   SCL_PIN = 0;
-   delay_10us(1);
-
-   //end of device reset
-   ///////////////////////////////////
-
+   //set the baud rate, FSCL
+   //FSCL = FCY / (I2C2BRG + 1 + FCY/10,000,000)
    //set the baud rate, FSCL
    //FSCL = FCY / (I2C2BRG + 1 + FCY/10,000,000)
 #ifdef FOSC_32MHZ
-#ifdef FSCL_400KHZ
-   I2C2BRG = 37U; //404kHz
-#endif //#ifdef FSCL_400KHZ
+#ifdef FSCL1_100KHZ
+   I2C1BRG = 157U; //100kHz
+#endif //#ifdef FSCL1_100KHZ
 #ifdef FSCL_1MHZ
-   I2C2BRG = 13U; //1.026MHz
+   I2C1BRG = 13U; //1.026MHz
 #endif //#ifdef FSCL_1MHZ
 #endif //#ifdef FOSC_32MHZ
 
 #ifdef FOSC_16MHZ
-#ifdef FSCL_400KHZ
-   I2C2BRG = 18U; //404kHz
-#endif //#ifdef FSCL_400KHZ
+#ifdef FSCL1_100KHZ
+   I2C1BRG = 18U; //404kHz
+#endif //#ifdef FSCL1_100KHZ
 #ifdef FSCL_1MHZ
-   I2C2BRG = 6U; //1.026MHz
+   I2C1BRG = 6U; //1.026MHz
 #endif //#ifdef FSCL_1MHZ
 #endif //#ifdef FOSC_16MHZ
 
    //configure the I2C control register 1
-   I2C2CONbits.I2CEN = 1; //enables I2C module and configures port pins
-   I2C2CONbits.I2CSIDL = 0; //continues operation in idle mode
-   I2C2CONbits.IPMIEN = 0; //Intelligent Platform Management Interface is disabled
-#ifdef FSCL_400KHZ
-   I2C2CONbits.DISSLW = 0; //Slew rate control enabled
-#endif //#ifdef FSCL_400KHZ   
+   I2C1CONbits.I2CEN = 1; //enables I2C module and configures port pins
+   I2C1CONbits.I2CSIDL = 0; //continues operation in idle mode
+   I2C1CONbits.IPMIEN = 0; //Intelligent Platform Management Interface is disabled
+#ifdef FSCL1_100KHZ
+   I2C1CONbits.DISSLW = 0; //Slew rate control enabled
+#endif //#ifdef FSCL1_100KHZ
 #ifdef FSCL_1MHZ
-   I2C2CONbits.DISSLW = 1; //Slew rate control disabled
+   I2C1CONbits.DISSLW = 1; //Slew rate control disabled
 #endif //#ifdef FSCL_1MHZ
 
 }//configure_display_i2c_port

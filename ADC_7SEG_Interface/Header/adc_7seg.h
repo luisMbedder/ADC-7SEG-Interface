@@ -60,8 +60,8 @@ typedef signed long long S64;
 #endif
 //I2C display bus speed
 //#define FSCL_1MHZ
-#define FSCL_400KHZ
-#if  (!defined (FSCL_1MHZ) && !defined (FSCL_400KHZ))
+#define FSCL_100KHZ
+#if  (!defined (FSCL_1MHZ) && !defined (FSCL_100KHZ))
 #error "Invalid FSCL specified in adc_7seg.h" //define 1MHz or 400Khz FSCL above
 #endif
 

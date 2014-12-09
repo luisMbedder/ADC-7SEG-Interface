@@ -209,11 +209,11 @@ ADC_ERROR_T init_adc(void)
                break;
             }
 					
-               write_ad779x(CONFIG_REG, 0x1031u); //ad7799, an2, ext ref, G=8 added unipolar added g=1
+               write_ad779x(CONFIG_REG, 0x1031u); //ad7799, an2, ext ref, G=1
                				
             u16temp = read_ad779x(CONFIG_REG);
             //check readback from AD7799 if connected
-            if(u16temp != 0x1031u)  //ad7799, an2, ext ref, G=8
+            if(u16temp != 0x1031u)  //ad7799, an2, ext ref, G=1
             {
                ad779x_state = AD779X_RESET;
                break;
@@ -313,6 +313,7 @@ ADC_ERROR_T read_adc(void)
    //convert average voltage to a 16 bit value, regardless of ADC used  
    temp_filtered_voltage = (temp_filtered_voltage >> 8);
    m_filtered_voltage = temp_filtered_voltage;
+   //voltage = (code*Vref)/2^16
    voltage=(m_filtered_voltage*2.02)/65535;
 	
    return NO_ADC_ERROR;	
