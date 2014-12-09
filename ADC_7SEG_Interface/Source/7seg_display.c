@@ -1,30 +1,28 @@
 /********************************************************************
-* Project: Ti31
+* Project: ADC_7SEG_Interface
 *
-* File: display.c
-*
-* Copyright 2014 Dover Flexo Electronics, All Rights Reserved
+* File: 7seg_display.c
 *
 * Description: This module contains the functions to communicate
-*			   to the 4 digit 7 segment displays. 
+*			   to the 4 digit 7 segment displays using the I2C interface. 
 *
 * Known Issues: None
 *
 ********************************************************************/
 
-#include "..\Header\p24FJ128GB108.h"
-#include "..\CONTROL\Header\ti31.h"
-#include "..\Header\eeprom.h"
+#include "p24FJ128GB108.h"
+#include "adc_7seg.h"
+#include "7seg_display.h"
 
-static EEPROM_LOW_LEVEL_ERROR_T MasterWriteI2C1(unsigned char data_out);
-static EEPROM_LOW_LEVEL_ERROR_T IdleI2C1(void);
-static EEPROM_LOW_LEVEL_ERROR_T MasterReadI2C1(U8 * const data_p);
-static EEPROM_LOW_LEVEL_ERROR_T StartI2C1(void);
-static EEPROM_LOW_LEVEL_ERROR_T StopI2C1(void);
-static U16 eeprom_busy(void);
-void I2C1_WriteByte(U8 busAddr, unsigned char data_out);
+static I2C_LOW_LEVEL_ERROR_T MasterWriteI2C1(unsigned char data_out);
+static I2C_LOW_LEVEL_ERROR_T IdleI2C1(void);
+static I2C_LOW_LEVEL_ERROR_T MasterReadI2C1(U8 * const data_p);
+static I2C_LOW_LEVEL_ERROR_T StartI2C1(void);
+static I2C_LOW_LEVEL_ERROR_T StopI2C1(void);
+static U16 i2c_busy(void);
+void I2C_WriteByte(U8 busAddr, unsigned char data_out);
 void SS_Init();
-void I2C1_WriteBytes(U8 busAddr, U16 const* data_out_p,const U8 num_of_bytes);
+void I2C_WriteBytes(U8 busAddr, U16 const* data_out_p,const U8 num_of_bytes);
 
 #define HT16K33 0xE0// I2C bus address for Ht16K33 backpack
 #define HT16K33_ON 0x21 // turn device oscillator on
@@ -40,7 +38,7 @@ void SS_Init()
 
 //static U8 display_data[6]={0x00, 0x71, 0x3E, 0x00, 0x79,0x38};
 static U16 display_data[6]={0x06, 0x5B, 0x00, 0x4F, 0x66};//1,2,colon off,3,4
-//if (!eeprom_busy())
+//if (!i2c1_busy())
 	I2C1_WriteByte(HT16K33,HT16K33_ON); // turn on device oscillator
     delay_10us(10);
 	I2C1_WriteByte(HT16K33,HT16K33_DISPLAYON); // turn on display, no blink
@@ -51,68 +49,68 @@ static U16 display_data[6]={0x06, 0x5B, 0x00, 0x4F, 0x66};//1,2,colon off,3,4
 
 }
 
-static U16 eeprom_busy(void)
+static U16 i2c1_busy(void)
 {
-   EEPROM_LOW_LEVEL_ERROR_T return_error = NO_EEPROM_ERROR;
+   I2C_LOW_LEVEL_ERROR_T return_error = NO_I2C_ERROR;
 
    return_error = IdleI2C1(); //wait until I2C Bus is Inactive
-   if (return_error != NO_EEPROM_ERROR)
+   if (return_error != NO_I2C_ERROR)
    {
       return TRUE;
    }
 
    return_error = StartI2C1(); //transmit START command
-   if (return_error != NO_EEPROM_ERROR)
+   if (return_error != NO_I2C_ERROR)
    {
       return TRUE;
    }
 
    //transmit control byte to write data
-   return_error = MasterWriteI2C1(0xe0);
-   if (return_error == NO_EEPROM_ERROR) //eeprom acknowledged write command successfully
+   return_error = MasterWriteI2C1(HT16K33);
+   if (return_error == NO_I2C_ERROR) //display acknowledged write command successfully
    {
       return_error = StopI2C1(); //transmit stop command
-      if (return_error == NO_EEPROM_ERROR)
+      if (return_error == NO_I2C_ERROR)
          return FALSE;
       else
          return TRUE;
    }
-   else //eeprom is busy
+   else //display is busy
    {
       return_error = StopI2C1(); //transmit stop command
       return TRUE;
    }
-}//eeprom_busy
+}//display_busy
 
 
 ///i2c START FUNCTION///
-static EEPROM_LOW_LEVEL_ERROR_T I2C1_Start(U8 busAddr){
+static I2C_LOW_LEVEL_ERROR_T I2C1_Start(U8 busAddr){
 
-EEPROM_LOW_LEVEL_ERROR_T return_error = NO_EEPROM_ERROR;
+I2C_LOW_LEVEL_ERROR_T return_error = NO_I2C_ERROR;
 
   	return_error = IdleI2C1(); //wait until I2C Bus is Inactive
-   if (return_error != NO_EEPROM_ERROR)
+   if (return_error != NO_I2C_ERROR)
    {
       return return_error;
    }
 
 	return_error = StartI2C1(); //transmit START command
-   	if (return_error != NO_EEPROM_ERROR)
+   	if (return_error != NO_I2C_ERROR)
    	{
       return return_error;
    	}
 
    	//transmit bus address
    	return_error = MasterWriteI2C1(busAddr);
-   	if (return_error != NO_EEPROM_ERROR)
+   	if (return_error != NO_I2C_ERROR)
    	{
       return return_error;
    	}
 
 }
 //stop function///
-static EEPROM_LOW_LEVEL_ERROR_T I2C1_Stop(){
-EEPROM_LOW_LEVEL_ERROR_T return_error = NO_EEPROM_ERROR;
+static I2C_LOW_LEVEL_ERROR_T I2C1_Stop(){
+I2C_LOW_LEVEL_ERROR_T return_error = NO_I2C_ERROR;
 
 	return_error = StopI2C1(); //transmit stop command
 }
@@ -120,7 +118,7 @@ EEPROM_LOW_LEVEL_ERROR_T return_error = NO_EEPROM_ERROR;
 
 void I2C1_WriteByte(U8 busAddr, unsigned char data_out){
 
-EEPROM_LOW_LEVEL_ERROR_T return_error = NO_EEPROM_ERROR;
+I2C_LOW_LEVEL_ERROR_T return_error = NO_I2C_ERROR;
 
 I2C1_Start(busAddr);
 MasterWriteI2C1(data_out);
@@ -130,7 +128,7 @@ I2C1_Stop();
 
 void I2C1_WriteBytes(U8 busAddr, U16 const* data_out_p,const U8 num_of_bytes){
 
-EEPROM_LOW_LEVEL_ERROR_T return_error = NO_EEPROM_ERROR;
+I2C_LOW_LEVEL_ERROR_T return_error = NO_I2C_ERROR;
 U8 transmission_count = 0;
  U8 address_byte = 0;
    U8 data_byte = 0;
@@ -144,7 +142,7 @@ address_byte = (U8) (((*data_out_p >> 8) & 0x00FF));
 data_byte = (U8) (*data_out_p & 0x00FF);
       return_error = MasterWriteI2C1(address_byte);
  	  return_error = MasterWriteI2C1(data_byte);
-      if (return_error != NO_EEPROM_ERROR)
+      if (return_error != NO_I2C_ERROR)
       {
          return return_error;
       }
@@ -168,23 +166,23 @@ I2C1_Stop();
 *************************************************************************/
 /*void I2C1_WriteByte(U8 busAddr, unsigned char data_out){
 
-	EEPROM_LOW_LEVEL_ERROR_T return_error = NO_EEPROM_ERROR;
+	I2C_LOW_LEVEL_ERROR_T return_error = NO_I2C_ERROR;
 
   	return_error = IdleI2C1(); //wait until I2C Bus is Inactive
-   if (return_error != NO_EEPROM_ERROR)
+   if (return_error != NO_I2C_ERROR)
    {
       return return_error;
    }
 
 	return_error = StartI2C1(); //transmit START command
-   	if (return_error != NO_EEPROM_ERROR)
+   	if (return_error != NO_I2C_ERROR)
    	{
       return return_error;
    	}
 
    	//transmit control byte to write data
    	return_error = MasterWriteI2C1(busAddr);
-   	if (return_error != NO_EEPROM_ERROR)
+   	if (return_error != NO_I2C_ERROR)
    	{
       return return_error;
    	}
@@ -192,7 +190,7 @@ I2C1_Stop();
 //return_error = IdleI2C1(); //wait until I2C Bus is Inactive
 //return_error = StartI2C1(); //transmit START command
 	return_error = MasterWriteI2C1(data_out);
- 	if (return_error != NO_EEPROM_ERROR)
+ 	if (return_error != NO_I2C_ERROR)
  	{
     return return_error;
 	}
@@ -213,9 +211,9 @@ I2C1_Stop();
 *    Parameters:     unsigned char : data_out
 *    Return Value:   char
 *************************************************************************/
-static EEPROM_LOW_LEVEL_ERROR_T MasterWriteI2C1(unsigned char data_out)
+static I2C_LOW_LEVEL_ERROR_T MasterWriteI2C1(unsigned char data_out)
 {
-   EEPROM_LOW_LEVEL_ERROR_T return_error = NO_EEPROM_ERROR;
+   I2C_LOW_LEVEL_ERROR_T return_error = NO_I2C_ERROR;
    I2C1TRN = data_out; //write byte to I2C transmit register
 if(I2C1TRN == 0x03e8)
 	{
@@ -225,41 +223,41 @@ if(I2C1TRN == 0x03e8)
    if(I2C1STATbits.IWCOL) //collision occurred, communication stopped
    {
       return_error = StopI2C1();
-      if (return_error != NO_EEPROM_ERROR)
+      if (return_error != NO_I2C_ERROR)
       {
          return return_error;
       }
       return_error = IdleI2C1();
-      if (return_error != NO_EEPROM_ERROR)
+      if (return_error != NO_I2C_ERROR)
       {
          return return_error;
       }
-      return EEPROM_COLLISION; //collision was detected, communication stopped
+      return I2C_COLLISION; //collision was detected, communication stopped
    }
    else
    {
       return_error = IdleI2C1(); //wait till data is transmitted as indicated by TRSTAT
-      if (return_error != NO_EEPROM_ERROR)
+      if (return_error != NO_I2C_ERROR)
       {
          return return_error;
       }
       if(I2C1STATbits.ACKSTAT) //1 = NACK was detected last
       {
          return_error = StopI2C1();
-         if (return_error != NO_EEPROM_ERROR)
+         if (return_error != NO_I2C_ERROR)
          {
             return return_error;
          }
          return_error = IdleI2C1();
-         if (return_error != NO_EEPROM_ERROR)
+         if (return_error != NO_I2C_ERROR)
          {
             return return_error;
          }
-         return EEPROM_NACK; //NACK was detected, communication stopped
+         return I2C_NACK; //NACK was detected, communication stopped
       }
       else
       {
-         return NO_EEPROM_ERROR; //successful write
+         return NO_I2C_ERROR; //successful write
       }
    }
 }//MasterWriteI2C2
@@ -273,17 +271,17 @@ if(I2C1TRN == 0x03e8)
 *    Parameters:     void
 *    Return Value:   void
 *************************************************************************/
-static EEPROM_LOW_LEVEL_ERROR_T IdleI2C1(void)
+static I2C_LOW_LEVEL_ERROR_T IdleI2C1(void)
 {
    U16 idle_start = read_ms_count();
    /* Wait until I2C Bus is Inactive */
    while(I2C1CONbits.SEN || I2C1CONbits.RSEN || I2C1CONbits.PEN || I2C1CONbits.RCEN || I2C1CONbits.ACKEN || I2C1STATbits.TRSTAT)
    {
 //      ClrWdt();
-      if (timeout(idle_start, EEPROM_TIMEOUT_MS))
-         return EEPROM_TIMEOUT;
+      if (timeout(idle_start, DISPLAY_TIMEOUT_MS))
+         return I2C_TIMEOUT;
    }
-   return NO_EEPROM_ERROR;
+   return NO_I2C_ERROR;
 }//IdleI2C1
 
 /*********************************************************************
@@ -293,9 +291,9 @@ static EEPROM_LOW_LEVEL_ERROR_T IdleI2C1(void)
 *    Parameters:     void
 *    Return Value:   void
 *********************************************************************/
-static EEPROM_LOW_LEVEL_ERROR_T StartI2C1(void)
+static I2C_LOW_LEVEL_ERROR_T StartI2C1(void)
 {
-   EEPROM_LOW_LEVEL_ERROR_T return_error = NO_EEPROM_ERROR;
+   I2C_LOW_LEVEL_ERROR_T return_error = NO_I2C_ERROR;
 
    I2C1CONbits.SEN = 1;   /* initiate Start on SDA and SCL pins */
 
@@ -313,7 +311,7 @@ static EEPROM_LOW_LEVEL_ERROR_T StartI2C1(void)
 *    Parameters:     void
 *    Return Value:   unsigned char
 ********************************************************************************/
-static EEPROM_LOW_LEVEL_ERROR_T MasterReadI2C1(U8 * const data_p)
+static I2C_LOW_LEVEL_ERROR_T MasterReadI2C1(U8 * const data_p)
 {
    U32 delay_count = 0;
 
@@ -324,12 +322,12 @@ static EEPROM_LOW_LEVEL_ERROR_T MasterReadI2C1(U8 * const data_p)
 //      ClrWdt();
       delay_count++;
       if (delay_count > MAX_I2C_DELAY_COUNT)
-         return EEPROM_TIMEOUT;
+         return I2C_TIMEOUT;
    }
 
    I2C1STATbits.I2COV = 0; //clear the receive overflow bit
    *data_p = I2C1RCV;
-   return NO_EEPROM_ERROR;
+   return NO_I2C_ERROR;
 }//MasterReadI2C2
 
 /*********************************************************************
@@ -339,9 +337,9 @@ static EEPROM_LOW_LEVEL_ERROR_T MasterReadI2C1(U8 * const data_p)
 *    Parameters:     void
 *    Return Value:   void
 *********************************************************************/
-static EEPROM_LOW_LEVEL_ERROR_T StopI2C1(void)
+static I2C_LOW_LEVEL_ERROR_T StopI2C1(void)
 {
-   EEPROM_LOW_LEVEL_ERROR_T return_error = NO_EEPROM_ERROR;
+   I2C_LOW_LEVEL_ERROR_T return_error = NO_I2C_ERROR;
 
    I2C1CONbits.PEN = 1;   /* initiate Stop on SDA and SCL pins */
 
