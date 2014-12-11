@@ -29,6 +29,7 @@
 #include "p24FJ128GB108.h"
 #include "GenericTypeDefs.h"
 #include "adc_7seg.h"
+#include "7seg_display.h"
 #include "delay.h"
 #include "init.h"
 #include "timer.h"
@@ -115,6 +116,7 @@ void YourLowPriorityISRCode();
 ********************************************************************/
 RESET_CONDITION_T m_reset_condition = POWER_ON_RESET;
 ADC_ERROR_T m_voltage_error = NO_ADC_ERROR;
+I2C_LOW_LEVEL_ERROR_T m_display_error = NO_I2C_ERROR;
 static U16 m_max_loop_time = 0;
 
 /********************************************************************
@@ -146,7 +148,7 @@ int main(void)
    initialize_system();
 
    m_max_loop_time = 0;
-SS_Init();
+ 
       while (1)
       {
          process_adc();
@@ -285,6 +287,7 @@ static void initialize_system(void)
 {
    configure_processor();
    m_voltage_error = init_adc();
+   m_display_error = init_display();
 }//initialize_system
 
 

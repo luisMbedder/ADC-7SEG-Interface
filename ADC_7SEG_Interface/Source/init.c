@@ -98,22 +98,7 @@ static void configure_io(void)
 
    //initialize Port B output pins
    /*
-   LATBbits.LATB0 = 0; //Pin 20 used as analog input, set to 0
-   LATBbits.LATB1 = 0; //Pin 19 used as analog input, set to 0
-   LATBbits.LATB2 = 0; //Pin 18 used as analog input, set to 0
-   LATBbits.LATB3 = 0; //Pin 17 unused, set to output driving ground
-   LATBbits.LATB4 = 0; //Pin 16 unused, set to output driving ground
-   LATBbits.LATB5 = 0; //Pin 15 unused, set to output driving ground 
-   LATBbits.LATB6 = 0; //PGEC, Pin 21 unused, set to 0
-   LATBbits.LATB7 = 0; //PGED, Pin 22 unused, set to 0
-   LATBbits.LATB8 = 0; //Pin 27 unused, set to output driving ground
-   LATBbits.LATB9 = 0; //Pin 29 unused, set to output driving ground
-   LATBbits.LATB10 = 0; //Pin 29 unused, set to output driving ground
-   LATBbits.LATB11 = 0; //Pin 30 unused, set to output driving ground
-   LATBbits.LATB12 = 0; //Pin 33 unused, set to output driving ground
-   LATBbits.LATB13 = 0; //Pin 34 unused, set to output driving ground
-   LATBbits.LATB14 = 0; //Pin 35 unused, set to output driving ground
-   LATBbits.LATB15 = 0; //Pin 36 unused, set to output driving ground
+   Port B pins unused, set to output driving ground
    */
    LATB = 0b0000000000000000;
           //FEDCBA9876543210
@@ -164,66 +149,21 @@ static void configure_io(void)
 
    //initialize Port E output pins
    /*
-   //LATEbits.LATE0 = 0;//Pin 76 unused, set to output driving ground
-   //LATEbits.LATE1 = 0;//Pin 77 unused, set to output driving ground
-   //LATEbits.LATE2 = 0;//Pin 78 unused, set to output driving ground
-   //LATEbits.LATE3 = 0;//Pin 79 unused, set to output driving ground
-   //LATEbits.LATE4 = 0;//Pin 80 unused, set to output driving ground
-   //LATEbits.LATE5 = 0;//Pin 1 unused, set to output driving ground
-   //LATEbits.LATE6 = 0;//Pin 2 unused, set to output driving ground
-   //LATEbits.LATE7 = 0;//Pin 3 unused, set to output driving ground
-   //LATEbits.LATE8 = 0;//Pin 13 unused, set to output driving ground
-   //LATEbits.LATE9 = 0; //Pin 14 unused, set to 0
-   //No E10, set to 0
-   //No E11, set to 0
-   //No E12, set to 0
-   //No E13, set to 0
-   //No E14, set to 0
-   //No E15, set to 0
+    Port E pins unused, set to output driving ground
    */
    LATE = 0b0000000000000000;
           //FEDCBA9876543210
 
    //initialize Port F output pins
    /*
-   //LATFbits.LATF0 = 0; //Pin 72 unused, set to output driving ground
-   //LATFbits.LATF1 = 0; //Pin 73 unused, set to output driving ground
-   //LATFbits.LATF2 = 0; //Pin 42 unused, set to output driving ground
-   //LATFbits.LATF3 = 0; //Pin 41 unused, set to output driving ground
-   //Pin 39 controlled by SPI3, set to 0
-   //Pin 40 controlled by SPI3, set to 0
-   //No F6, set to 0
-   //No F7, set to 0
-   //LATFbits.LATF8 = 0; //Pin 43 unused, set to output driving ground
-   //No F9, set to 0
-   //No F10, set to 0
-   //No F11, set to 0
-   //No F12, set to 0
-   //No F13, set to 0
-   //No F14, set to 0
-   //No F15, set to 0
+	Port F pins unused, set to output driving ground
    */
    LATF = 0b0000000000000000;
           //FEDCBA9876543210
 
    //initialize Port G output pins
    /*
-   //LATGbits.LATG0 = 0; //Pin 75 unused, set to output driving ground
-   //LATGbits.LATG1 = 0; //Pin 74 unused, set to output driving ground
-   //LATGbits.LATG2 = 0; //Pin 47 unused, set to output driving ground
-   //LATGbits.LATG3 = 0; //Pin 46 unused, set to output driving ground
-   //No G4, set to 0
-   //No G5, set to 0
-   //LATGbits.LATG6 = 0; //Pin 6 unused, set to output driving ground
-   //LATGbits.LATG7 = 0; //Pin 7 unused, set to output driving ground
-   //LATGbits.LATG8 = 0; //Pin 8 unused, set to output driving ground
-   //LATGbits.LATG9 = 0; //Pin 9 unused, set to output driving ground
-   //No G10, set to 0
-   //No G11, set to 0
-   //No G12, set to 0
-   //No G13, set to 0
-   //No G14, set to 0
-   //No G15, set to 0   
+	 Port G pins unused, set to output driving ground  
    */
    LATG = 0b0000000000000000;
           //FEDCBA9876543210
@@ -310,44 +250,14 @@ static void configure_io(void)
 
    //configure Port E I/O direction
    /*
-   TRISEbits.TRISE0 = 0; //Pin 76 unused, set to output driving ground
-   TRISEbits.TRISE1 = 0; //Pin 77 unused, set to output driving ground
-   TRISEbits.TRISE2 = 0; //Pin 78 unused, set to output driving ground
-   TRISEbits.TRISE3 = 0; //Pin 79 unused, set to output driving ground
-   TRISEbits.TRISE4 = 0; //Pin 80 unused, set to output driving ground
-   TRISEbits.TRISE5 = 0; //Pin 1 unused, set to output driving ground
-   TRISEbits.TRISE6 = 0; //Pin 2 unused, set to output driving ground
-   TRISEbits.TRISE7 = 0; //Pin 3 unused, set to output driving ground
-   TRISEbits.TRISE8 = 0; //Pin 13 unused, set to output driving ground
-   TRISEbits.TRISE9 = 0; //Pin 14 unused, set to output driving ground
-   //No E10, set to 0
-   //No E11, set to 0
-   //No E12, set to 0
-   //No E13, set to 0
-   //No E14, set to 0
-   //No E15, set to 0
+	Port E pins unused, set to output driving ground
    */
    TRISE = 0b0000000000000000;
            //FEDCBA9876543210
 
    //configure Port F I/O direction
    /*
-   TRISFbits.TRISF0 = 0; //Pin 72 unused, set to output driving ground
-   TRISFbits.TRISF1 = 0; //Pin 73 unused, set to output driving ground
-   TRISFbits.TRISF2 = 0; //Pin 74 unused, set to output driving ground
-   TRISFbits.TRISF3 = 0; //Pin 41 unused, set to output driving ground 
-   TRISFbits.TRISF4 = 0; //Pin 39 unused, set to output driving ground
-   TRISFbits.TRISF5 = 0; //Pin 40 unused, set to output driving ground
-   //No F6, set to 0
-   //No F7, set to 0
-   TRISFbits.TRISF8 = 0; //Pin 43 unused, set to output driving ground
-   //No F9, set to 0
-   //No F10, set to 0
-   //No F11, set to 0
-   //No F12, set to 0
-   //No F13, set to 0
-   //No F14, set to 0
-   //No F15, set to 0
+	Port F pins unused, set to output driving ground
    */
    TRISF = 0b0000000000000000;
            //FEDCBA9876543210
@@ -355,22 +265,7 @@ static void configure_io(void)
 
    //configure Port G I/O direction
    /*
-   TRISGbits.TRISG0 = 0; //Pin 75 unused, set to output driving ground
-   TRISGbits.TRISG1 = 0; //Pin 74 unused, set to output driving ground
-   TRISGbits.TRISG2 = 0; //Pin 47 unused, set to output driving ground
-   TRISGbits.TRISG3 = 0; //Pin 46 unused, set to output driving ground
-   //No G4, set to 0
-   //No G5, set to 0
-   TRISGbits.TRISG6 = 0; //Pin 6 unused, set to output driving ground
-   TRISGbits.TRISG7 = 0; //Pin 7 unused, set to output driving ground
-   TRISGbits.TRISG8 = 0; //Pin 8 unused, set to output driving ground
-   TRISGbits.TRISG9 = 0; //Pin 10 unused, set to output driving ground
-   //No G10, set to 0
-   //No G11, set to 0
-   //No G12, set to 0
-   //No G13, set to 0
-   //No G14, set to 0
-   //No G15, set to 0 
+	 Port G pins unused, set to output driving ground
    */
    TRISG = 0b0000000000000000;
            //FEDCBA9876543210
@@ -378,22 +273,7 @@ static void configure_io(void)
 
    //configure analog pins
    /*
-   AD1PCFGLbits.PCFG0 = 1; //Configure AN0 (Pin 20) in Digital mode, unused
-   AD1PCFGLbits.PCFG1 = 1; //Configure AN1 (Pin 19) in Digital mode, unused
-   AD1PCFGLbits.PCFG2 = 1; //Configure AN2 (Pin 18) in Digital mode, unused
-   AD1PCFGLbits.PCFG3 = 1; //Configure AN3 (Pin 17) in Digital mode, unused
-   AD1PCFGLbits.PCFG4 = 1; //Configure AN4 (Pin 16) in Digital mode, unused
-   AD1PCFGLbits.PCFG5 = 1; //Configure AN5 (Pin 15) in Digital mode, unused
-   AD1PCFGLbits.PCFG6 = 1; //Configure AN6 (Pin 21) in Digital mode, PGEC / unused
-   AD1PCFGLbits.PCFG7 = 1; //Configure AN7 (Pin 22) in Digital mode, PGED / unused
-   AD1PCFGLbits.PCFG8 = 1; //Configure AN8 (Pin 27) in Digital mode, unused
-   AD1PCFGLbits.PCFG9 = 1; //Configure AN9 (Pin 28) in Digital mode, unused 
-   AD1PCFGLbits.PCFG10 = 1; //Configure AN10 (Pin 29) in Digital mode, unused
-   AD1PCFGLbits.PCFG11 = 1; //Configure AN11 (Pin 30) in Digital mode, unused
-   AD1PCFGLbits.PCFG12 = 1; //Configure AN12 (Pin 33) in Digital mode, unused 
-   AD1PCFGLbits.PCFG13 = 1; //Configure AN13 (Pin 34) in Digital mode, unused 
-   AD1PCFGLbits.PCFG14 = 1; //Configure AN14 (Pin 35) in Digital mode, unused 
-   AD1PCFGLbits.PCFG15 = 1; //Configure AN15 (Pin 36) in Digital mode, unused 
+	Set all analog pins in digital mode, unused 
    */
    AD1PCFGL = 0b1111111111111111;
               //FEDCBA9876543210
@@ -403,15 +283,10 @@ static void configure_io(void)
    __builtin_write_OSCCONL(OSCCON & 0xBF); //clear bit 6 of OSCCONL to unlock Pin Re-map
    //configure input functions
    RPINR20bits.SDI1R = 22; //assign SPI1 Data Input (SDI1) to RP22 (Pin 63)
- //  RPINR28bits.SDI3R = 3; //assign SPI3 Data Input (SDI3) to RP3 (Pin 56)
-//   RPINR18bits.U1RXR = 15; //assign UART1 Receive (U1RX) to RP15 (Pin 43)
- //  RPINR19bits.U2RXR = 10; //assign UART2 Receive (U2RX) to RP10 (Pin 39)
 
    //configure output functions
    RPOR12bits.RP24R = 8; //8 represents SPI1 SCK Out (SCK1OUT), assigned to RP24 (Pin 61)
    RPOR11bits.RP23R = 7; //7 represents SPI1 Data Out (SDO1), assigned to RP23 (Pin 62)
-  // RPOR15bits.RP30R = 3; //3 represents UART1 Transmit (U1TX), assigned to RP30 (Pin 42)
- //  RPOR7bits.RP14R = 5; //5 represents UART2 Transmit (U2TX), assinged to RP14 (Pin 35)
 
    __builtin_write_OSCCONL(OSCCON | 0x40); //set bit 6 of OSCCONL to lock Pin Re-map and prevent
                                            // reconfiguration of peripheral pin select pins until reset
@@ -452,18 +327,6 @@ static void configure_adc_spi_port(void)
    SPI1CON1bits.PPRE = 0b01; //Primary Prescale Bits set for 16:1 ratio
 #endif //#ifdef FOSC_16MHZ
 
-/*
-   //SPI clock speed, Fsck = FCY / (Primary Prescaler * Secondary Prescaler)
-   //Fsck programmed to 500kHz
-#ifdef FOSC_32MHZ
-   SPI1CON1bits.SPRE = 0b110; //Secondary Prescale Bits set for 2:1 ratio
-   SPI1CON1bits.PPRE = 0b01; //Primary Prescale Bits set for 16:1 ratio
-#endif //#ifdef FOSC_32MHZ
-#ifdef FOSC_16MHZ
-   SPI1CON1bits.SPRE = 0b111; //Secondary Prescale Bits set for 1:1 ratio
-   SPI1CON1bits.PPRE = 0b00; //Primary Prescale Bits set for 64:1 ratio
-#endif //#ifdef FOSC_16MHZ
-*/
    //configure SPI1 control register 2
    SPI1CON2bits.FRMEN = 0; //Framed support disabled
  
@@ -482,7 +345,7 @@ static void configure_adc_spi_port(void)
 *
 * Created by : LuisMbedder
 *
-* Description : Configures the I2C1 module for communication with the
+* Description : Configures the I2C2 module for communication with the
 *               7-segment led displays. 
 *
 * Notes : This function is not declared static so it can be used
