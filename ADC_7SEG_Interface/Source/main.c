@@ -311,6 +311,7 @@ static void process_adc(void)
    static U16 loop_time_delay_count = 0;
    static U16 start_tick = 0;
    static U16 end_tick = 0;
+   static float voltage = 0;
   
 
    //the adc drives the loop timing
@@ -325,6 +326,9 @@ static void process_adc(void)
 
    //sample voltage signal 
    m_voltage_error = read_adc();
+   //calcuate voltage value
+U16 temp = filtered_voltage_signal();
+   voltage =((float)filtered_voltage_signal()*2.02)/65535;
 
    if (startup_delay_count < STARTUP_DELAY_COUNT)
       startup_delay_count++;

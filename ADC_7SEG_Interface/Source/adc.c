@@ -32,13 +32,14 @@ U16 filtered_signal(void);
 static U32 read_ad779x(const U8 reg);
 static void write_ad779x(const U8 reg, const U32 data);
 static U32 voltage_filter(const U32 sample, const U16 depth);
-
+static float calculate_voltage(void);
 
 /********************************************************************
 * Static Variables
 ********************************************************************/ 
 static U16 m_filtered_voltage = 0U;
-static U16 m_voltage_percent = 0U;
+//static U16 m_voltage_value = 0U;
+
 
 
 
@@ -313,8 +314,6 @@ ADC_ERROR_T read_adc(void)
    //convert average voltage to a 16 bit value, regardless of ADC used  
    temp_filtered_voltage = (temp_filtered_voltage >> 8);
    m_filtered_voltage = temp_filtered_voltage;
-   //voltage = (code*Vref)/2^16
-   voltage=(m_filtered_voltage*2.02)/65535;
 	
    return NO_ADC_ERROR;	
 }//read_voltage_adc

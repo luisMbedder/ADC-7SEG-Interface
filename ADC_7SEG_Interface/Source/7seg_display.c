@@ -70,10 +70,10 @@ I2C_LOW_LEVEL_ERROR_T init_display(void)
 	I2C1_WriteByte(HT16K33,HT16K33_ON); // turn on device oscillator
 	I2C1_WriteByte(HT16K33,HT16K33_DISPLAYON); // turn on display, no blink
 	I2C1_WriteByte(HT16K33,HT16K33_MAX); // set max brightness
-    return_error = I2C1_WriteDisplay(HT16K33,clear_display);	//clear display memory
+    return_error = I2C1_WriteDisplay(HT16K33,clear_display);  //clear display memory
 	if (return_error != NO_I2C_ERROR)
     {
-      return return_error;
+         return return_error;
     }
 
     return return_error;
