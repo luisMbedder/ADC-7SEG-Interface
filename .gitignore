@@ -27,3 +27,6 @@
 *.app
 *.hex
 *.map
+
+#MPLAB
+*.mcs
