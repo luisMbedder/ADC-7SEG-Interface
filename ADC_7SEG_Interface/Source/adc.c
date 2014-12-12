@@ -314,7 +314,7 @@ ADC_ERROR_T read_adc(void)
    //convert average voltage to a 16 bit value, regardless of ADC used  
    temp_filtered_voltage = (temp_filtered_voltage >> 8);
    m_filtered_voltage = temp_filtered_voltage;
-	 voltage=(filtered_voltage_signal()*2.02)/65535;
+   voltage=(filtered_voltage_signal()*2.02)/65535;
    return NO_ADC_ERROR;	
 }//read_voltage_adc
 

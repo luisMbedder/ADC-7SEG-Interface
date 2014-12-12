@@ -103,6 +103,7 @@ static void process_adc(void);
 static void calc_loop_time(const U16 start_tick, const U16 end_tick);
 
 
+
 /********************************************************************
 * Microchip USB related Function Prototype Section
 ********************************************************************/
@@ -311,8 +312,8 @@ static void process_adc(void)
    static U16 loop_time_delay_count = 0;
    static U16 start_tick = 0;
    static U16 end_tick = 0;
-   float voltage = 0;
-  U16 temp=0;
+   static float voltage = 0;
+   static U16 temp=0;
 
    //the adc drives the loop timing
    //it samples voltage 242 times a second for a loop time around 4.1ms
@@ -329,7 +330,7 @@ static void process_adc(void)
    //calcuate voltage value
    temp = filtered_voltage_signal();
    voltage =(temp*2.02)/65535;
-
+   update_display(voltage);
    if (startup_delay_count < STARTUP_DELAY_COUNT)
       startup_delay_count++;
 

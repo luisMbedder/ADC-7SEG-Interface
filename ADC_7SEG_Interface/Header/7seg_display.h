@@ -12,6 +12,12 @@
 #define MAX_I2C_DELAY_COUNT 10000U
 #define DISPLAY_TIMEOUT_MS 100U
 
+typedef int bool;
+#define true 1
+#define false 0
+#define DECIMAL_POINT 0x2E //ascii deciaml
+
+
 typedef enum I2C_LOW_LEVEL_ERROR_T
 {
    NO_I2C_ERROR = 0,

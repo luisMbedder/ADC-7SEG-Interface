@@ -40,6 +40,7 @@ static I2C_LOW_LEVEL_ERROR_T IdleI2C1(void);
 static I2C_LOW_LEVEL_ERROR_T StartI2C1(void);
 static I2C_LOW_LEVEL_ERROR_T StopI2C1(void);
 static U16 i2c_busy(void);
+void update_display(float current_voltage);
 I2C_LOW_LEVEL_ERROR_T I2C1_WriteByte(U8 busAddr, unsigned char data_out);
 void SS_Init();
 I2C_LOW_LEVEL_ERROR_T I2C1_WriteDisplay(U8 busAddr, U16 const* data_out_p);
@@ -52,6 +53,26 @@ I2C_LOW_LEVEL_ERROR_T I2C1_WriteDisplay(U8 busAddr, U16 const* data_out_p);
 #define HT16K33_BLINKON 0x85 // blink rate 1 Hz (-2 for 2 Hz)
 #define HT16K33_BLINKOFF 0x81 // same as display on
 #define HT16K33_MAX 0xEF // max brightness
+
+
+static const U8 numbertable[] = {
+0x3F, /* 0 */
+0x06, /* 1 */
+0x5B, /* 2 */
+0x4F, /* 3 */
+0x66, /* 4 */
+0x6D, /* 5 */
+0x7D, /* 6 */
+0x07, /* 7 */
+0x7F, /* 8 */
+0x6F, /* 9 */
+0x77, /* a */
+0x7C, /* b */
+0x39, /* C */
+0x5E, /* d */
+0x79, /* E */
+0x71, /* F */
+};
 
 /********************************************************************
 * Function name : displayInit
@@ -250,6 +271,56 @@ static I2C_LOW_LEVEL_ERROR_T MasterWriteI2C1(unsigned char data_out)
 }//MasterWriteI2C1
 
 
+/********************************************************************
+* Function name : update_display
+*
+* current_voltage : latest voltage conversion to be sent to 7 segment display
+*
+* Created by : LuisMbedder
+*
+* Description : This function builds the display data buffer. Each element
+*				in the buffer array coressponds to a display digit
+*				or the display colon. 
+*
+* Notes : 
+********************************************************************/
+void update_display(float current_voltage){
+
+     int i = 0;
+	 int k=0;
+     char buffer[10];
+	 U16 displayBuffer[8]={0};
+     //U8 numericDigits = 4; // available digits on display
+     //bool isNegative = false; // true if the number is negative
+
+     sprintf(buffer, "%05.2f", current_voltage);
+	/*build display buffer
+		displayBuffer[0]=digit 0
+		displayBuffer[1]=digit 1
+		displayBuffer[2]=colon
+		displayBuffer[3]=digit 2
+		displayBuffer[4]=digit 3
+	*/
+     for (i = 0; i < 5; i++){
+		if(buffer[i]==DECIMAL_POINT){
+			displayBuffer[k-1]=displayBuffer[k-1]|0x80;//add decimal to previous digit
+			continue;//go to next index
+		}
+		if(k==2){//colon index
+			displayBuffer[k]=0x00;//set colon off
+			k++;
+		}
+		
+		int j =buffer[i]-0x30;
+		displayBuffer[k]=numbertable[j];
+		k++;//
+		
+      }
+
+	I2C1_WriteDisplay(HT16K33,displayBuffer);  //send data to display
+
+}
+
 
 /************************************************************************
 *    Function Name:  IdleI2C1
@@ -306,3 +377,4 @@ static I2C_LOW_LEVEL_ERROR_T StopI2C1(void)
 
    return return_error;
 }//StopI2C1
+
