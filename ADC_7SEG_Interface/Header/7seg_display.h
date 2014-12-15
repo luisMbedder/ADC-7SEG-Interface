@@ -15,7 +15,7 @@
 typedef int bool;
 #define true 1
 #define false 0
-#define DECIMAL_POINT 0x2E //ascii deciaml
+#define DECIMAL_POINT 0x80 //turns on decimal pt
 
 
 typedef enum I2C_LOW_LEVEL_ERROR_T

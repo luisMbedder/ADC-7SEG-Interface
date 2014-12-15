@@ -89,6 +89,6 @@ typedef signed long long S64;
 RESET_CONDITION_T reset_condition(void);
 ADC_ERROR_T voltage_error(void);
 U16 max_loop_time(void);
-
+extern U8 phase;
 
 #endif//ADC_7SEG.H

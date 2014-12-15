@@ -42,7 +42,6 @@ static I2C_LOW_LEVEL_ERROR_T StopI2C1(void);
 static U16 i2c_busy(void);
 void update_display(float current_voltage);
 I2C_LOW_LEVEL_ERROR_T I2C1_WriteByte(U8 busAddr, unsigned char data_out);
-void SS_Init();
 I2C_LOW_LEVEL_ERROR_T I2C1_WriteDisplay(U8 busAddr, U16 const* data_out_p);
 
 #define HT16K33 0xE0// I2C bus address for Ht16K33 backpack
@@ -54,7 +53,7 @@ I2C_LOW_LEVEL_ERROR_T I2C1_WriteDisplay(U8 busAddr, U16 const* data_out_p);
 #define HT16K33_BLINKOFF 0x81 // same as display on
 #define HT16K33_MAX 0xEF // max brightness
 
-
+//look-up table for 7 segment display numbers
 static const U8 numbertable[] = {
 0x3F, /* 0 */
 0x06, /* 1 */
@@ -99,6 +98,8 @@ I2C_LOW_LEVEL_ERROR_T init_display(void)
 
     return return_error;
 }
+
+
 
 /********************************************************************
 * Function name : I2C1_Start
@@ -279,8 +280,8 @@ static I2C_LOW_LEVEL_ERROR_T MasterWriteI2C1(unsigned char data_out)
 * Created by : LuisMbedder
 *
 * Description : This function builds the display data buffer. Each element
-*				in the buffer array coressponds to a display digit
-*				or the display colon. 
+*				in the buffer array coressponds to a display digit.
+*				 
 *
 * Notes : 
 ********************************************************************/
@@ -288,11 +289,19 @@ void update_display(float current_voltage){
 
      int i = 0;
 	 int k=0;
+	 int blank_spaces=0;
      char buffer[10];
 	 U16 displayBuffer[8]={0};
-     //U8 numericDigits = 4; // available digits on display
-     //bool isNegative = false; // true if the number is negative
-
+ 
+	 if(current_voltage<.1){
+		blank_spaces=2;
+	 }
+     else if(current_voltage<10.0){
+		blank_spaces=1;
+	 }
+	 else{
+		blank_spaces=0;
+	 }
      sprintf(buffer, "%05.2f", current_voltage);
 	/*build display buffer
 		displayBuffer[0]=digit 0
@@ -302,8 +311,8 @@ void update_display(float current_voltage){
 		displayBuffer[4]=digit 3
 	*/
      for (i = 0; i < 5; i++){
-		if(buffer[i]==DECIMAL_POINT){
-			displayBuffer[k-1]=displayBuffer[k-1]|0x80;//add decimal to previous digit
+		if(buffer[i]=='.'){
+			displayBuffer[k-1]=displayBuffer[k-1]|DECIMAL_POINT;//add decimal to previous digit
 			continue;//go to next index
 		}
 		if(k==2){//colon index
@@ -311,14 +320,18 @@ void update_display(float current_voltage){
 			k++;
 		}
 		
-		int j =buffer[i]-0x30;
+		int j =buffer[i]-0x30;//convert ascii to decimal
 		displayBuffer[k]=numbertable[j];
 		k++;//
 		
       }
+	 	
+	 for(i=0;i<blank_spaces;i++){
+		displayBuffer[i]=displayBuffer[i]&0x80; //keep decimal point if its there
+	 }
 
-	I2C1_WriteDisplay(HT16K33,displayBuffer);  //send data to display
-
+	 I2C1_WriteDisplay(HT16K33,displayBuffer);  //write data to display
+	 phase++;
 }
 
 

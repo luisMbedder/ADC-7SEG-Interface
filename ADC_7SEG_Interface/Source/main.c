@@ -101,15 +101,7 @@ static RESET_CONDITION_T check_for_power_on_reset();
 static void process_voltage_led(void);
 static void process_adc(void);
 static void calc_loop_time(const U16 start_tick, const U16 end_tick);
-
-
-
-/********************************************************************
-* Microchip USB related Function Prototype Section
-********************************************************************/
-static void initialize_system(void);
-void YourHighPriorityISRCode();
-void YourLowPriorityISRCode();
+static float calculate_voltage();
 
 
 /********************************************************************
@@ -121,8 +113,9 @@ I2C_LOW_LEVEL_ERROR_T m_display_error = NO_I2C_ERROR;
 static U16 m_max_loop_time = 0;
 
 /********************************************************************
-* Microchip USB related Variables
+* Global Variables
 ********************************************************************/
+U8 phase=0;
 
 
 
@@ -143,18 +136,31 @@ static U16 m_max_loop_time = 0;
 ********************************************************************/
 int main(void)
 { 
-//   ClrWdt();
-   m_reset_condition = check_for_power_on_reset(); 
-//   ClrWdt();  
-   initialize_system();
 
+   m_reset_condition = check_for_power_on_reset(); 
+   initialize_system();
+   static float voltage=0;
    m_max_loop_time = 0;
- 
+  
       while (1)
       {
-         process_adc();
+        ClrWdt();//must kick at least once every 4 seconds
+		switch(phase)
+		{
+			case 0:
+				process_adc(); 
+				break;
+			case 1:
+				voltage=calculate_voltage();
+				update_display(voltage); 
+				break;
+		//	case 2:
+		//		break;
+			default:
+				phase=0;
+				break;
+		}
          
-
       }
 
 }//main
@@ -328,17 +334,34 @@ static void process_adc(void)
    //sample voltage signal 
    m_voltage_error = read_adc();
    //calcuate voltage value
-   temp = filtered_voltage_signal();
-   voltage =(temp*2.02)/65535;
-   update_display(voltage);
+ //  temp = filtered_voltage_signal();
+  // voltage =(temp*2.02)/65535;
+  // update_display(voltage);
    if (startup_delay_count < STARTUP_DELAY_COUNT)
       startup_delay_count++;
 
    if (loop_time_delay_count < 1000U)
       loop_time_delay_count++;
+phase++;
 }//process_adc
 
+/********************************************************************
+* Function name : calculate_voltage
+*
+* Created by : LuisMbedder
+*
+* Description : Calculates the voltage using the latest adc sample. 
+*
+* Notes : None
+********************************************************************/
+static float calculate_voltage(){
+ static U16 temp=0;
+static float voltage = 0;
+temp = filtered_voltage_signal();
+     voltage =(temp*2.02)/65535;
+  return voltage;
 
+}
 /********************************************************************
 * Function name : calc_loop_time
 *
