@@ -282,7 +282,6 @@ static I2C_LOW_LEVEL_ERROR_T MasterWriteI2C1(unsigned char data_out)
 * Description : This function builds the display data buffer. Each element
 *				in the buffer array coressponds to a display digit.
 *				 
-*
 * Notes : 
 ********************************************************************/
 void update_display(float current_voltage){

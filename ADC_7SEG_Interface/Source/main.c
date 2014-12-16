@@ -101,7 +101,8 @@ static RESET_CONDITION_T check_for_power_on_reset();
 static void process_voltage_led(void);
 static void process_adc(void);
 static void calc_loop_time(const U16 start_tick, const U16 end_tick);
-static float calculate_voltage();
+static void initialize_system(void);
+static float calculate_voltage(void);
 
 
 /********************************************************************
@@ -354,11 +355,17 @@ phase++;
 *
 * Notes : None
 ********************************************************************/
-static float calculate_voltage(){
- static U16 temp=0;
-static float voltage = 0;
-temp = filtered_voltage_signal();
-     voltage =(temp*2.02)/65535;
+static float calculate_voltage(void){
+  static U16 adc_counts=0;
+  static float voltage = 0;
+  adc_counts = filtered_voltage_signal();
+  /*
+	input voltage divider = (1/8)*Vin
+    adc reference voltage is 2.02V
+    Vin = (adc_counts/65535)*8*2.02
+    so voltage range is 0-10V. 
+  */
+  voltage =(adc_counts*16.3)/65535;
   return voltage;
 
 }
