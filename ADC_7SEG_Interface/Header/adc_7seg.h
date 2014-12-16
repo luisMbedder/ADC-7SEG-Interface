@@ -65,9 +65,6 @@ typedef signed long long S64;
 #error "Invalid FSCL specified in adc_7seg.h" //define 1MHz or 400Khz FSCL above
 #endif
 
-//System definitions
-#define STARTUP_DELAY_COUNT 32U
-
 
 //chip select pins
 #define ADC_CS_PIN LATDbits.LATD12              //output, use latch

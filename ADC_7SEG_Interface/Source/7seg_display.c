@@ -45,6 +45,7 @@ static I2C_LOW_LEVEL_ERROR_T StopI2C1(void);
 void update_display(float current_voltage);
 I2C_LOW_LEVEL_ERROR_T I2C1_WriteByte(U8 busAddr, unsigned char data_out);
 I2C_LOW_LEVEL_ERROR_T I2C1_WriteDisplay(U8 busAddr, U16 const* data_out_p);
+bool check_adc_error(void);
 
 #define HT16K33 0xE0// I2C bus address for Ht16K33 backpack
 #define HT16K33_ON 0x21 // turn device oscillator on
@@ -74,6 +75,8 @@ static const U8 numbertable[] = {
 0x79, /* E */
 0x71, /* F */
 };
+
+static const U16 errorMsg[8]={0x3F,0x3F,0x3F,0x3F,0x3F,0x3F,0x3F,0x3F};//error message is all 0's
 
 /********************************************************************
 * Function name : init_display
@@ -336,6 +339,31 @@ void update_display(float current_voltage){
 	 phase++;
 }
 
+/********************************************************************
+* Function name : check_adc_error
+*
+* returns : boolean indicating if there was an adc error
+*
+* Created by : LuisMbedder
+*
+* Description : This function checks if there is an 
+*				adc error present. An error is indicated
+*			    by blinking zeros. 
+*
+* Notes : None
+********************************************************************/
+bool check_adc_error(){
+  	ADC_ERROR_T adc_error_state = voltage_error();
+	if(adc_error_state!=NO_ADC_ERROR)
+		{
+		  I2C1_WriteByte(HT16K33,HT16K33_BLINKON); // turn blink on
+          I2C1_WriteDisplay(HT16K33,errorMsg);  //show all 0's
+		  return true;
+		}
+	 else
+		  return false;
+		
+}
 
 /************************************************************************
 *    Function Name:  IdleI2C1

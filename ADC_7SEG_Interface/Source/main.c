@@ -117,9 +117,6 @@ static U16 m_max_loop_time = 0;
 ********************************************************************/
 U8 phase=0;
 
-
-
-#pragma code
 /********************************************************************
 * Function name : main
 *
@@ -152,7 +149,9 @@ int main(void)
 				break;
 			case 1:
 				voltage=calculate_voltage();
-				update_display(voltage); 
+				if(!check_adc_error()){//if no adc error then update display
+				  update_display(voltage); 
+				}
 				break;
 		//	case 2:
 		//		break;
@@ -312,9 +311,7 @@ static void initialize_system(void)
 ********************************************************************/
 static void process_adc(void)
 {
-   ClrWdt(); //must kick wathdog at least once every 4 seconds
 
-   static U16 startup_delay_count = 0;
    static U16 loop_time_delay_count = 0;
    static U16 start_tick = 0;
    static U16 end_tick = 0;
@@ -324,7 +321,7 @@ static void process_adc(void)
    end_tick = TMR5;
    if (loop_time_delay_count >= 1000U)
       calc_loop_time(start_tick, end_tick);
-
+ 
    m_voltage_error = wait_for_voltage_sample_to_complete(); //this holds on the ADC, which drives the loop time
 
    start_tick = TMR5;
@@ -332,8 +329,6 @@ static void process_adc(void)
    //sample voltage signal 
    m_voltage_error = read_adc();
 
-   if (startup_delay_count < STARTUP_DELAY_COUNT)
-      startup_delay_count++;
 
    if (loop_time_delay_count < 1000U)
       loop_time_delay_count++;
@@ -363,6 +358,8 @@ static float calculate_voltage(void){
   return voltage;
 
 }
+
+
 /********************************************************************
 * Function name : calc_loop_time
 *
