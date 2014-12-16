@@ -32,7 +32,6 @@ U16 filtered_signal(void);
 static U32 read_ad779x(const U8 reg);
 static void write_ad779x(const U8 reg, const U32 data);
 static U32 voltage_filter(const U32 sample, const U16 depth);
-static float calculate_voltage(void);
 
 /********************************************************************
 * Static Variables

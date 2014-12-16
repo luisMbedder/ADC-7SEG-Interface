@@ -34,12 +34,14 @@
 #include "p24FJ128GB108.h"
 #include "adc_7seg.h"
 #include "7seg_display.h"
+#include "timer.h"
+#include <stdio.h>
+
 I2C_LOW_LEVEL_ERROR_T init_display(void);
 static I2C_LOW_LEVEL_ERROR_T MasterWriteI2C1(unsigned char data_out);
 static I2C_LOW_LEVEL_ERROR_T IdleI2C1(void);
 static I2C_LOW_LEVEL_ERROR_T StartI2C1(void);
 static I2C_LOW_LEVEL_ERROR_T StopI2C1(void);
-static U16 i2c_busy(void);
 void update_display(float current_voltage);
 I2C_LOW_LEVEL_ERROR_T I2C1_WriteByte(U8 busAddr, unsigned char data_out);
 I2C_LOW_LEVEL_ERROR_T I2C1_WriteDisplay(U8 busAddr, U16 const* data_out_p);
@@ -74,7 +76,7 @@ static const U8 numbertable[] = {
 };
 
 /********************************************************************
-* Function name : displayInit
+* Function name : init_display
 *
 * Created by : LuisMbedder
 *
@@ -147,9 +149,10 @@ I2C_LOW_LEVEL_ERROR_T return_error = NO_I2C_ERROR;
 * Return Value:   I2C error code
 ********************************************************************/
 static I2C_LOW_LEVEL_ERROR_T I2C1_Stop(void){
-I2C_LOW_LEVEL_ERROR_T return_error = NO_I2C_ERROR;
 
+    I2C_LOW_LEVEL_ERROR_T return_error = NO_I2C_ERROR;
 	return_error = StopI2C1(); //transmit stop command
+    return return_error;
 }
 
 /********************************************************************
@@ -172,7 +175,7 @@ I2C_LOW_LEVEL_ERROR_T I2C1_WriteByte(U8 busAddr, unsigned char data_out){
 	return_error = I2C1_Start(busAddr); //send start command
 	return_error = MasterWriteI2C1(data_out);//send data
 	return_error = I2C1_Stop(); //release i2c bus
-
+    return return_error;
 }
 
 /************************************************************************
@@ -301,7 +304,7 @@ void update_display(float current_voltage){
 	 else{
 		blank_spaces=0;
 	 }
-     sprintf(buffer, "%05.2f", current_voltage);
+     sprintf(buffer, "%05.2f", (double)current_voltage);
 	/*build display buffer
 		displayBuffer[0]=digit 0
 		displayBuffer[1]=digit 1

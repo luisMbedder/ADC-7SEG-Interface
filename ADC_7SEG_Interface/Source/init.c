@@ -359,8 +359,6 @@ void configure_display_i2c_port(void)
    LATDbits.LATD9 = 0; //I2C pin, initialized to 0
    LATDbits.LATD10 = 0; //I2C pin, initialized to 0
 
-   U16 i = 0;
-
    //set the baud rate, FSCL
    //FSCL = FCY / (I2C2BRG + 1 + FCY/10,000,000)
    //set the baud rate, FSCL

@@ -27,3 +27,6 @@ typedef enum I2C_LOW_LEVEL_ERROR_T
    I2C_TIMEOUT
 } I2C_LOW_LEVEL_ERROR_T;
 
+//extern functions
+void update_display(float current_voltage);
+I2C_LOW_LEVEL_ERROR_T init_display(void);
